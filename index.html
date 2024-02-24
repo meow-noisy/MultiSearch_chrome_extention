@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>Multi Search</title>
     <style>
         body {
@@ -13,6 +14,11 @@
 </head>
 
 <body>
+    <p>検索<br>
+        <input type="radio" name="search_mode" value="page" checked> ページ
+        <input type="radio" name="search_mode" value="image"> 画像
+    </p>
+
     <form id="searchForm">
         <input type="text" id="searchInput" placeholder="Enter text to search">
         <button type="button" id="searchButton">Search</button>
