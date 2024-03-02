@@ -9,6 +9,10 @@
             width: 300px;
             padding: 10px;
         }
+
+        textarea {
+            width: 250px;
+        }
     </style>
     <script src="popup.js"></script>
 </head>
@@ -20,7 +24,7 @@
     </p>
 
     <form id="searchForm">
-        <input type="text" id="searchInput" placeholder="Enter text to search">
+        <textarea id="myTextarea" rows="5" placeholder="Enter text to search"></textarea>
         <button type="button" id="searchButton">Search</button>
     </form>
 

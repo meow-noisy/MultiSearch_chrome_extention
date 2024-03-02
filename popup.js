@@ -1,18 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
   var searchButton = document.getElementById('searchButton');
-  var searchInput = document.getElementById('searchInput');
 
   // ボタンをクリックした時の処理
   searchButton.addEventListener('click', function () {
     searchOnMultipleEngines();
-  });
-
-  // Enterキーが押された時の処理
-  searchInput.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // デフォルトのEnterキーの挙動を無効化
-      searchOnMultipleEngines();
-    }
   });
 
   showSearchEnginesList();
@@ -69,7 +60,8 @@ searchEngines.forEach(function (engine) {
 function searchOnMultipleEngines() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
 
-    var searchInput = document.getElementById('searchInput').value;
+    var textarea = document.getElementById("myTextarea");
+    var lines = textarea.value.split("\n");
 
     // チェックされているラジオボタンを取得する
     var radioButtons = document.getElementsByName('search_mode');
@@ -82,28 +74,32 @@ function searchOnMultipleEngines() {
       }
     }
 
-    // var searchEnginesListDiv = document.getElementById('searchEnginesList');
-    var checkboxes = document.querySelectorAll('#searchEnginesList input[type="checkbox"]');
-
-    // タブを開く
-    checkboxes.forEach(function (checkbox) {
-      console.log(checkbox.id + ': ' + checkbox.checked);
-
-      if (checkbox.checked && !checkbox.disabled) {
-        var searchQuery = encodeURIComponent(searchInput);
-        if (checkedValue === 'image') {
-          var base_url = searchEngineMapImage[checkbox.id];
-        } else {
-          var base_url = searchEngineMap[checkbox.id];
-        }
-        var searchURL = base_url + searchQuery;
-        chrome.tabs.create({ url: searchURL });
+    lines.forEach(searchInput => {
+      // 空白行の場合は処理をスキップして次の行へ
+      if (searchInput.trim() === '') {
+        return;
       }
 
+      var checkboxes = document.querySelectorAll('#searchEnginesList input[type="checkbox"]');
+
+      // タブを開く
+      checkboxes.forEach(function (checkbox) {
+
+        if (checkbox.checked && !checkbox.disabled) {
+          var searchQuery = encodeURIComponent(searchInput);
+          if (checkedValue === 'image') {
+            var base_url = searchEngineMapImage[checkbox.id];
+          } else {
+            var base_url = searchEngineMap[checkbox.id];
+          }
+          var searchURL = base_url + searchQuery;
+          chrome.tabs.create({ url: searchURL });
+        }
+
+      });
+
     });
-
   });
-
 }
 
 // 検索エンジン一覧
@@ -173,6 +169,8 @@ function updateSearchEnginesList() {
       if (!('im_url' in searchEngines[i])) {
         checkbox.disabled = true;
       }
+    } else {
+      checkbox.disabled = false;
     }
   });
 
