@@ -4,7 +4,8 @@
     "manifest_version": 3,
     "description": "検索したいキーワードを複数の検索エンジンで一斉に検索できるchrome拡張機能",
     "permissions": [
-        "activeTab"
+        "activeTab",
+        "storage"
     ],
     "action": {
         "default_popup": "index.html"

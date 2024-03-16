@@ -18,10 +18,13 @@
 </head>
 
 <body>
-    <p>検索<br>
-        <input type="radio" name="search_mode" value="page" checked> ページ
-        <input type="radio" name="search_mode" value="image"> 画像
-    </p>
+    <form>
+        <p>検索<br>
+            <input type="radio" name="search_mode" value="page" id="pageRadio" checked> ページ
+            <input type="radio" name="search_mode" value="image" id="imageRadio"> 画像
+        </p>
+    </form>
+
 
     <form id="searchForm">
         <textarea id="myTextarea" rows="5" placeholder="Enter text to search"></textarea>
